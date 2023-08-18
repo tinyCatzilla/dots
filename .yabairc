@@ -1,0 +1,58 @@
+yabai -m config layout bsp
+
+
+# Window rules
+# Set all padding and gaps to 20pt (default: 0)
+# yabai -m config top_padding    0
+# yabai -m config bottom_padding 0
+# yabai -m config left_padding   0
+# yabai -m config right_padding  0
+yabai -m config window_gap     12
+
+# Useful optional stuff
+yabai -m config focus_follows_mouse autofocus
+yabai -m config window_shadow float
+yabai -m config window_border_width 1
+yabai -m config active_window_border_color  0xBF999999
+# yabai -m config window_opacity on
+# yabai -m config normal_window_opacity 0.9
+
+
+# Drag/resizes Windows with mouse without having to grab the edges first by holding ctrl
+yabai -m config mouse_modifier ctrl
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+
+# bar settings
+yabai -m config external_bar               all:35:0     \
+                window_border              on           \
+                mouse_follows_focus        off          \
+                focus_follows_mouse        off          \
+                window_zoom_persist        off          \
+                window_placement           second_child \
+                window_topmost             off          \
+                window_shadow              float        \
+                window_opacity             off          \
+                window_opacity_duration    0.0          \
+                active_window_opacity      1.0          \
+                normal_window_opacity      0.0          \
+                window_border_width        2            \
+                window_border_hidpi        off          \
+                window_border_radius       11           \
+                window_border_blur         off          \
+                window_animation_duration  0.3          \
+                active_window_border_color 0x00f17013   \
+                normal_window_border_color 0x00f17013   \
+                insert_feedback_color      0xff9dd274   \
+                split_ratio                0.50         \
+                auto_balance               off          \
+                mouse_modifier             fn           \
+                mouse_action1              move         \
+                mouse_action2              resize       \
+                mouse_drop_action          swap         \
+                                                        \
+                top_padding                10           \
+                bottom_padding             4            \
+                left_padding               4            \
+                right_padding              4            \
+                window_gap                 6
