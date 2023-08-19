@@ -11,9 +11,9 @@ ctrl - s : yabai -m window --warp south
 ctrl - w : yabai -m window --warp north
 
 # Rotate layout
-ctrl - l : yabai -m space --rotate 90
+ctrl + alt - i : yabai -m space --rotate 90
 # Balance the layout
-ctrl - k : yabai -m space --balance
+ctrl + alt - o : yabai -m space --balance
 
 # Resize windows
 ctrl + shift - a : yabai -m window --resize left:-100:0 ; yabai -m window --resize right:-100:0
@@ -27,12 +27,7 @@ ctrl - space : yabai -m window --toggle float
 # Make fullscreen
 ctrl - f         : yabai -m window --toggle zoom-fullscreen
 # Toggle padding on/off
-ctrl - g         : yabai -m space --toggle padding --toggle gap
-# Disable padding overall
-
-ctrl - y         : yabai -m config top_padding 0 \ yabai -m config bottom_padding 0 \ yabai -m config left_padding 0 \ yabai -m config right_padding 0 \ yabai -m config window_gap 0
-ctrl - u         : yabai -m config window_gap 12
+ctrl + alt - g         : yabai -m space --toggle padding --toggle gap
 # Toggle floating/bsp
-ctrl - h         : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
-ctrl - o         : yabai -m config focus_follows_mouse autofocus
-ctrl - p         : yabai -m config focus_follows_mouse off
+ctrl + alt - h         : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+ctrl + alt - o         : yabai -m config focus_follows_mouse autofocus

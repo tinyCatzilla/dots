@@ -4,6 +4,14 @@ set ignorecase true
 set icons true
 
 # Custom Functions
+
+cmd open ${{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
 cmd mkdir ${{
   printf "Directory Name: "
   read ans
@@ -22,7 +30,14 @@ cmd setwallpaper ${{
     betterlockscreen -u "$f" --fx
 }}
 
-# Archive bindings
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+
 cmd unarchive ${{
   case "$f" in
       *.zip) unzip "$f" ;;
@@ -33,8 +48,6 @@ cmd unarchive ${{
   esac
 }}
 
-# Trash bindings
-# purge the unclean
 cmd remove ${{
     if [ -z $fs ]; then
         rm -fr $f
@@ -47,14 +60,23 @@ cmd remove ${{
     fi
 }}
 
+cmd broot ${{
+  f=$(mktemp)
+  res="$(broot -h --outcmd $f && cat $f | sed 's/cd //')"
+  rm -f "$f"
+  if [ -f "$res" ]; then
+    cmd="select"
+  elif [ -d "$res" ]; then
+    cmd="cd"
+  fi
+  lf -remote "send $id $cmd \"$res\""
+}}
+
 # Bindings
+map Km maps  # List normal mode mappings
+map Kc cmaps  # List command mode mappings
 map d
 map m
-
-map c $vscodium "$f"
-
-map au unarchive
-map ae $wine "$f"
 
 # Basic Functions
 map . set hidden!
@@ -69,13 +91,25 @@ map mf mkfile
 map md mkdir
 map bg setwallpaper
 map C clear
+map f broot
+
+# dedicated keys for file opener actions
+map o &mimeopen $f
+map O $mimeopen --ask $f
+
+# zip/unzip
+map az zip
+map au unarchive
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
 
 # Movement
-map gD cd ~/documents
-map gd cd ~/downloads
+map gd cd ~/Desktop
+map gD cd ~/downloads
 map gp cd ~/pictures
 map gc cd ~/.config
-map gr cd ~/repos
-map gv cd ~/videos
 map gs cd ~/.local/bin
 map gt cd ~/.local/share/Trash/files
+map glf cd ~/.config/lf
