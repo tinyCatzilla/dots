@@ -17,6 +17,7 @@ alias ls='exa --icons -F -H --group-directories-first --git -1'
 export EDITOR="nvim"
 export VISUAL="nvim"
 export XDG_DATA_HOME=~/.local/
+export XDG_CONFIG_HOME=$HOME/.config/
 export PATH=$PATH:$HOME/.local/bin/
 export PATH=$PATH:$HOME/.config/emacs/bin
 export PATH=$PATH:$(go env GOBIN)

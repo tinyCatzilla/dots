@@ -22,10 +22,10 @@ ctrl + shift - w : yabai -m window --resize top:0:-100 ; yabai -m window --resiz
 ctrl + shift - d : yabai -m window --resize right:100:0 ; yabai -m window --resize left:100:0
 
 # Float / Unfloat window
-ctrl - space : yabai -m window --toggle float
+ctrl + alt - space : yabai -m window --toggle float
 
 # Make fullscreen
-ctrl - f         : yabai -m window --toggle zoom-fullscreen
+ctrl + alt - f         : yabai -m window --toggle zoom-fullscreen
 # Toggle padding on/off
 ctrl + alt - g         : yabai -m space --toggle padding --toggle gap
 # Toggle floating/bsp
