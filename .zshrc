@@ -23,3 +23,8 @@ export PATH=$PATH:$HOME/.config/emacs/bin
 export PATH=$PATH:$(go env GOBIN)
 
 source /Users/kary/.config/broot/launcher/bash/br
+
+LFCD="/Users/kary/.config/lf/lfcd.zsh"
+  if [ -f "$LFCD" ]; then
+      source "$LFCD"
+  fi

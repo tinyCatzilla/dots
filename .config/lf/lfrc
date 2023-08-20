@@ -3,6 +3,34 @@ set hidden true
 set ignorecase true
 set icons true
 
+# Sort downloads by time, and everything else naturally
+cmd on-cd &{{
+    case "$PWD" in
+        ~/Downloads)
+            lf -remote "send $id set user_prev_sortby $lf_sortby"
+            lf -remote "send $id set sortby time"
+            lf -remote "send $id set reverse true"
+            lf -remote "send $id set dirfirst false"
+
+            lf -remote "send $id echomsg changed sort to time"
+            ;;
+        *)
+            # restore sorting on directory exit
+            if [[ "$lf_user_prev_sortby" != "" ]]; then
+                lf -remote "send $id set sortby $lf_user_prev_sortby"
+                lf -remote "send $id set reverse false"
+                lf -remote "send $id set dirfirst true"
+
+                lf -remote "send $id echomsg restored sort to $lf_user_prev_sortby"
+                lf -remote "send $id set user_prev_sortby ''"
+            fi
+            ;;
+    esac
+}}
+
+# run on startup too
+on-cd
+
 # Custom Functions
 
 cmd open ${{
@@ -93,23 +121,15 @@ map bg setwallpaper
 map C clear
 map f broot
 
-# dedicated keys for file opener actions
-map o &mimeopen $f
-map O $mimeopen --ask $f
-
-# zip/unzip
 map az zip
 map au unarchive
 
-# execute current file (must be executable)
-map x $$f
-map X !$f
-
 # Movement
-map gd cd ~/Desktop
-map gD cd ~/downloads
+map gd cd ~/Downloads
+map gD cd ~/Desktop
 map gp cd ~/pictures
 map gc cd ~/.config
 map gs cd ~/.local/bin
 map gt cd ~/.local/share/Trash/files
-map glf cd ~/.config/lf
+map glf $nvim ~/.config/lf/lfrc
+
