@@ -111,31 +111,15 @@ local is_dap_buffer = function(bufnr)
   return false
 end
 
-local disabled_buftypes = {
-  "terminal",
-  -- "nofile",
-  "prompt",
-}
+-- inititalize var to false
+vim.g.cmptoggle = false
 
 M.cmp = {
   enabled = function()
-    local disabled = false
-    disabled = disabled or is_dap_buffer(0)
-
-    disabled = disabled or (list_contains(disabled_buftypes, vim.api.nvim_get_option_value("buftype", { buf = 0 })))
-    disabled = disabled or (vim.fn.reg_recording() ~= "")
-    disabled = disabled or (vim.fn.reg_executing() ~= "")
-    disabled = disabled or (require("cmp.config.context").in_treesitter_capture "comment" == true)
-    disabled = disabled or (require("cmp.config.context").in_syntax_group "Comment" == true)
-
-    if disabled then
-      return not disabled
-    end
-
-    return true
+    return vim.g.cmptoggle
   end,
   completion = {
-    completeopt = "menu,menuone,noinsert,noselect",
+completeopt = "menu,menuone,noinsert,noselect",
     autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
     keyword_length = 2,
   },
@@ -144,45 +128,45 @@ M.cmp = {
       hl_group = "Comment",
     },
   },
-  mapping = {
-    ["<Up>"] = require("cmp").mapping.select_prev_item(),
-    ["<Down>"] = require("cmp").mapping.select_next_item(),
-    ["<Tab>"] = require("cmp").mapping(function(fallback)
-      if require("luasnip").expandable() then
-        require("luasnip").expand()
-      elseif require("luasnip").expand_or_jumpable() then
-        require("luasnip").expand_or_jump()
-      elseif check_backspace() then
-        fallback()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
-    ["<CR>"] = require("cmp").mapping {
-      i = function(fallback)
-        if require("cmp").visible() and require("cmp").get_active_entry() then
-          require("cmp").confirm { behavior = require("cmp").ConfirmBehavior.Replace, select = false }
-        else
-          fallback()
-        end
-      end,
-      s = require("cmp").mapping.confirm { select = true },
-      c = require("cmp").mapping.confirm { behavior = require("cmp").ConfirmBehavior.Replace, select = true },
-    },
-    ["<ESC>"] = require("cmp").mapping(function(fallback)
-      if require("cmp").visible() then
-        require("cmp").abort()
-      else
-        fallback()
-      end
-    end, {
-      "i",
-      "s",
-    }),
-  },
+  -- mapping = {
+  --   -- ["<Up>"] = require("cmp").mapping.select_prev_item(),
+  --   -- ["<Down>"] = require("cmp").mapping.select_next_item(),
+  --   ["<Tab>"] = require("cmp").mapping(function(fallback)
+  --     if require("luasnip").expandable() then
+  --       require("luasnip").expand()
+  --     elseif require("luasnip").expand_or_jumpable() then
+  --       require("luasnip").expand_or_jump()
+  --     elseif check_backspace() then
+  --       fallback()
+  --     else
+  --       fallback()
+  --     end
+  --   end, {
+  --     "i",
+  --     "s",
+  --   }),
+  --   ["<CR>"] = require("cmp").mapping {
+  --     i = function(fallback)
+  --       if require("cmp").visible() and require("cmp").get_active_entry() then
+  --         require("cmp").confirm { behavior = require("cmp").ConfirmBehavior.Replace, select = false }
+  --       else
+  --         fallback()
+  --       end
+  --     end,
+  --     s = require("cmp").mapping.confirm { select = true },
+  --     c = require("cmp").mapping.confirm { behavior = require("cmp").ConfirmBehavior.Replace, select = true },
+  --   },
+  --   ["<ESC>"] = require("cmp").mapping(function(fallback)
+  --     if require("cmp").visible() then
+  --       require("cmp").abort()
+  --     else
+  --       fallback()
+  --     end
+  --   end, {
+  --     "i",
+  --     "s",
+  --   }),
+  -- },
   performance = {
     debounce = 300,
     throttle = 60,

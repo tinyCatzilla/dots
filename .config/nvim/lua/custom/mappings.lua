@@ -5,8 +5,9 @@ M.disabled = {
     ["<leader>f"] = "",
     ["<leader>b"] = "",
     ["<leader>wK"] = "",
-    ["<leader>wk"] ="",
-    ["<leader>k"] = "",
+    ["<leader>wk"] = "",
+    -- ["<leader>k"] = "",
+    ["<leader>ra"] = "",
   },
 }
 
@@ -21,8 +22,6 @@ M.disabled = {
 
 M.general = {
   n = {
-    ["<leader>cc"] = { "<cmd>VimtexCompile<CR>"            , "build" },
-    ["<leader>cw"] = { "<cmd>VimtexCountWords!<CR>"        , "count" },
     ["<leader>d"] = { "<cmd>bdelete!<CR>"                 , "delete buffer" },
     ["<leader>i"] = { "<cmd>VimtexTocOpen<CR>"            , "index" },
     ["<leader>q"] = { "<cmd>wqa!<CR>"                     , "quit" },
@@ -34,14 +33,13 @@ M.general = {
     ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
     ["<leader>qq"] = { "<cmd>qa!<CR>", "󰗼 Exit" },
     ["J"] = {"mzJ`z"},
-    ["<C-d>"] = {"<C-d>zz"},
-    ["<C-u>"] = {"<C-u>zz"},
     -- ["<C-f>"] = {"<cmd>silent !tmux neww tmux-sessionizer<CR>", "tmux stuff"},
     ["<BS>"] = {"<cmd>bnext<CR>"},
     ["<S-TAB>"] = {"<cmd>bprevious<CR>"},
     ["<leader>ss"] = { "<cmd>SessionManager save_current_session<CR>", "save" },
     ["<leader>sd"] = { "<cmd>SessionManager delete_session<CR>", "delete" },
     ["<leader>sl"] = { "<cmd>SessionManager load_session<CR>", "load" },
+    ["<leader>ac"] = {"<cmd>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>", "toggle autocomplete"}
   },
   v = {
     ["J"] = {":m '>+1<CR>gv=gv", "move down through lines"},
@@ -125,24 +123,28 @@ M.portal = {
 
 M.telescope = {
   n = {
-    ["<leader>cd"] = { "<cmd>Telescope cder<CR>", "Change working directory"},
-    ["<leader>ff"] = {
-      function()
-        require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({previewer = false}))
-      end,
-      "Find files",
+    ["<leader>ff"] = {"<cmd>Telescope file_browser<CR>","search files",
     },
-    ["<leader>fh"] = {"<cmd> Telescope find_files cwd=$HOME <CR>", "search home"},
-    ["<leader>fp"] = {"<cmd> Telescope find_files cwd=$HOME/Desktop/github <CR>", "search projects"},
-    ["<leader>fc"] = {"<cmd> Telescope find_files cwd=$HOME/.config <CR>", "search config"},
+    ["<leader>fh"] = {"<cmd> Telescope file_browser cwd=$HOME <CR>", "search home"},
+    ["<leader>fw"] = {"<cmd> Telescope file_browser cwd=$HOME/work <CR>", "search work"},
+    ["<leader>fl"] = {"<cmd> Telescope file_browser cwd=$HOME/work/latex <CR>", "search latex"},
+    ["<leader>fp"] = {"<cmd> Telescope file_browser cwd=$HOME/work/projects <CR>", "search projects"},
+    ["<leader>fg"] = {"<cmd> Telescope file_browser cwd=$HOME/work/figures <CR>", "search figures"},
+    ["<leader>fe"] = {"<cmd> Telescope file_browser cwd=$HOME/work/envs <CR>", "search envs"},
+    -- ["<leader>fd"] = {"<cmd> Telescope file_browser cwd=$HOME/work/dotfiles <CR>", "search dotfiles"},
+    -- ["<leader>fs"] = {"<cmd> Telescope file_browser cwd=$HOME/work/school <CR>", "search school"},
+    ["<leader>ft"] = {"<cmd> Telescope file_browser cwd=$HOME/work/textbooks <CR>", "search textbooks"},
+    -- ["<leader>ft"] = {"<cmd> Telescope file_browser cwd=$HOME/work/talks <CR>", "search talks"},
+    -- ["<leader>fv"] = {"<cmd> Telescope file_browser cwd=$HOME/work/vimwiki <CR>", "search vimwiki"},
+    ["<leader>fc"] = {"<cmd> Telescope file_browser cwd=$HOME/.config <CR>", "search config"},
     ["<leader>fb"] = {"<cmd>Telescope bibtex<CR>", "search citations"},
     -- ["<leader>fk"] = { "<cmd>Telescope keymaps<CR>", " Find keymaps" },
-    ["<leader>fr"] = { "<cmd>Telescope frecency<CR>", " Recent files" },
+    ["<leader>fr"] = { "<cmd>Telescope frecency<CR>", "search recent" },
     ["<leader>fu"] = { "<cmd>Telescope undo<CR>", " Undo tree" },
-    ["<leader>fz"] = {
-      "<cmd>Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>",
-      " Find in file",
-    },
+    -- ["<leader>fz"] = {
+    --   "<cmd>Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>",
+    --   " Find in file",
+    -- },
   },
 }
 
@@ -156,15 +158,26 @@ M.bookmark = {
   },
 }
 
-M.searchbox = {
+M.latex = {
   n = {
-    ["<C-F>"] = { "<cmd> SearchBoxMatchAll clear_matches=true<CR>", "󱘟 Search matching all" },
-    ["<leader>r"] = { "<cmd> SearchBoxReplace confirm=menu<CR>", " Replace" },
+    ["<leader>cc"] = { "<cmd>VimtexCompile<CR>"            , "build" },
+    ["<leader>cw"] = { "<cmd>VimtexCountWords!<CR>"        , "count" },
   },
 }
 
-M.latex = {
-
+M.hover = {
+  n = {
+    ["<leader>ko"] = {
+      function()
+        require("pretty_hover").hover()
+      end, "Open hover"
+    },
+    ["<leader>kq"] = {
+      function()
+        require("pretty_hover").close()
+      end, "Close hover"
+    },
+  },
 }
 
 return M

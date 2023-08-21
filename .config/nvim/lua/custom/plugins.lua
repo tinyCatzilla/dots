@@ -2,102 +2,32 @@ local overrides = require "custom.configs.overrides"
 local cmp_opt = require "custom.configs.cmp"
 
 local plugins = {
-  -- cmp
-  {
-    "hrsh7th/nvim-cmp",
-    opts = cmp_opt.cmp,
+{
+    "neovim/nvim-lspconfig",
     dependencies = {
-      "delphinus/cmp-ctags",
-      "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "hrsh7th/cmp-copilot",
-      "ray-x/cmp-treesitter",
-      "js-everts/cmp-tailwind-colors",
-      { "jcdickinson/codeium.nvim", config = true },
       {
-        "tzachar/cmp-tabnine",
-        build = "./install.sh",
+        "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          local tabnine = require "cmp_tabnine.config"
-          tabnine:setup {
-            max_lines = 1000,
-            max_num_results = 3,
-            sort = true,
-            show_prediction_strength = false,
-            run_on_every_keystroke = true,
-            snipper_placeholder = "..",
-            ignored_file_types = {},
-          }
+          require "custom.configs.null-ls"
         end,
       },
       {
-        "L3MON4D3/LuaSnip",
+        "williamboman/mason.nvim",
+        opts = overrides.mason,
         config = function(_, opts)
-          require("plugins.configs.others").luasnip(opts)
-          require "custom.configs.luasnip"
+          dofile(vim.g.base46_cache .. "mason")
+          dofile(vim.g.base46_cache .. "lsp")
+          require("mason").setup(opts)
+          vim.api.nvim_create_user_command("MasonInstallAll", function()
+            vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+          end, {})
+          require "custom.configs.lspconfig"
         end,
       },
-      {
-        "zbirenbaum/copilot.lua",
-        event = "InsertEnter",
-        dependencies = {
-          {
-            "zbirenbaum/copilot-cmp",
-            config = function()
-              require("copilot_cmp").setup()
-            end,
-          },
-        },
-        config = function()
-          require("copilot").setup {
-            suggestion = {
-              enabled = false,
-              auto_trigger = false,
-              keymap = {
-                -- accept = "<Tab>",
-                accept_word = false,
-                accept_line = false,
-                next = "<M-]>",
-                prev = "<M-[>",
-                dismiss = "<C-]>",
-              },
-            },
-            panel = {
-              enabled = false,
-            },
-            filetypes = {
-              gitcommit = false,
-              TelescopePrompt = false,
-            },
-            server_opts_overrides = {
-              trace = "verbose",
-              settings = {
-                advanced = {
-                  listCount = 3,
-                  inlineSuggestCount = 3,
-                },
-              },
-            },
-          }
-        end,
-      },
+      "williamboman/mason-lspconfig.nvim",
     },
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "cmp")
-      local format_kinds = opts.formatting.format
-      opts.formatting.format = function(entry, item)
-        if item.kind == "Color" then
-          item = require("cmp-tailwind-colors").format(entry, item)
-          if item.kind == "Color" then
-            return format_kinds(entry, item)
-          end
-          return item
-        end
-        return format_kinds(entry, item)
-      end
-      require("cmp").setup(opts)
-    end,
+    config = function() end,
   },
-
 
   {
     "github/copilot.vim",
@@ -107,84 +37,6 @@ local plugins = {
     end,
   },
 
-
- -- {
- --    "kevinhwang91/nvim-ufo",
- --    event = "VeryLazy",
- --    dependencies = {
- --      "kevinhwang91/promise-async",
- --      {
- --        "luukvbaal/statuscol.nvim",
- --        event = "BufReadPost",
- --        config = function()
- --          local builtin = require "statuscol.builtin"
- --          require("statuscol").setup {
- --            relculright = true,
- --            bt_ignore = { "nofile", "prompt", "terminal", "packer" },
- --            ft_ignore = { "NvimTree", "dashboard", "nvcheatsheet" },
- --            segments = {
- --              -- Segment 1: Add padding
- --              {
- --                text = { " " },
- --              },
- --              -- Segment 2: Fold Column
- --              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
- --              -- Segment 3: Add padding
- --              {
- --                text = { " " },
- --              },
- --              -- Segment 4: Show signs with one character width
- --              {
- --                sign = { name = { ".*" }, maxwidth = 1, colwidth = 1 },
- --                auto = true,
- --                click = "v:lua.ScSa",
- --              },
- --              -- Segment 5: Show line number
- --              {
- --                text = { " ", " ", builtin.lnumfunc, " " },
- --                click = "v:lua.ScLa",
- --                condition = { true, builtin.not_empty },
- --              },
- --              -- Segment 6: Add padding
- --              {
- --                text = { " " },
- --                hl = "Normal",
- --                condition = { true, builtin.not_empty },
- --              },
- --            },
- --          }
- --        end,
- --      },
- --    },
- --    config = function()
- --      require "custom.configs.ufo"
- --    end,
- --  },
---    {
-  --   "anuvyklack/pretty-fold.nvim",
-  --   keys = { "<leader>a" },
-  --   config = function()
-  --     require "custom.configs.pretty-fold"
-  --   end,
-  -- },
-  -- {
-  --   "jghauser/fold-cycle.nvim",
-  --   keys = { "<leader>a" },
-  --   config = function()
-  --     require("fold-cycle").setup()
-  --   end,
-  -- },
-  -- {
-  --   "anuvyklack/fold-preview.nvim",
-  --   keys = { "<leader>a" },
-  --   dependencies = {
-  --     "anuvyklack/keymap-amend.nvim",
-  --   },
-  --   opts = {
-  --     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  --   },
-  -- },
-  -- 
   {
     'lervag/vimtex',
     lazy=false,
@@ -193,23 +45,35 @@ local plugins = {
     end,
   },
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
+    "rcarriga/nvim-notify",
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss all Notifications",
+      },
     },
-    config = function()
-      require "custom.configs.noice"
+    opts = {
+      timeout = 3000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.75)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+    },
+    init = function()
+      -- when noice is not enabled, install notify on VeryLazy
+      local Util = require("lazyvim.util")
+      if not Util.has("noice.nvim") then
+        Util.on_very_lazy(function()
+          vim.notify = require("notify")
+        end)
+      end
     end,
   },
-  -- {
-  --   'nvim-orgmode/orgmode',
-  --   lazy=false,
-  --   config = function()
-  --           require('orgmode').setup{}
-  --   end,
-  -- },
   -- {
   --   'ptzz/lf.vim',
   --   lazy=false,
@@ -256,6 +120,10 @@ local plugins = {
     end,
   },
   {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+  {
     "stevearc/dressing.nvim",
     lazy = false,
   },
@@ -287,18 +155,67 @@ local plugins = {
       require "custom.configs.autosave"
     end,
   },
+  -- {
+  --   "VonHeikemen/searchbox.nvim",
+  --   cmd = { "SearchBoxMatchAll", "SearchBoxReplace", "SearchBoxIncSearch" },
+  --   config = true,
+  -- },
   {
-    "VonHeikemen/searchbox.nvim",
-    cmd = { "SearchBoxMatchAll", "SearchBoxReplace", "SearchBoxIncSearch" },
-    config = true,
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    vscode = true,
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
   },
   {
-    "Fildo7525/pretty_hover",
-    keys = { "<leader>k" },
-    config = true,
+    "RRethy/vim-illuminate",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+      end
+
+      map("]]", "next")
+      map("[[", "prev")
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          map("]]", "next", buffer)
+          map("[[", "prev", buffer)
+        end,
+      })
+    end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
   },
+{
+	"Fildo7525/pretty_hover",
+	event = "LspAttach",
+	opts = {}
+},
   {
-    "Zeioth/compiler.nvim",
+    "zeioth/compiler.nvim",
     cmd = { "CompilerOpen", "CompilerToggleResults" },
     dependencies = {
       {
@@ -312,7 +229,7 @@ local plugins = {
             default_detail = 1,
             bindings = {
               ["q"] = function()
-                vim.cmd "OverseerClose"
+                vim.cmd "overseerclose"
               end,
             },
           },
@@ -327,10 +244,7 @@ local plugins = {
   {
     "zane-/cder.nvim",
   },
-  {
-    "MattesGroeger/vim-bookmarks",
-    cmd = { "BookmarkToggle", "BookmarkClear" },
-  },
+
   {
     "Shatur/neovim-session-manager",
     lazy = false,
@@ -356,96 +270,147 @@ local plugins = {
       })
     end,
   },
-  -- {
-  --   'goolord/alpha-nvim',
-  --   lazy=false,
-  --   disable=false,
-  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  --   -- config = function ()
-  --   --     require'alpha'.setup(require'alpha.themes.startify'.config)
-  --   -- end,
-  --   config = function()
-  --     require "custom.configs.alpha"
-  --   end,
-  --
-  -- },
 
-{
-  "goolord/alpha-nvim",
-  event = "VimEnter",
-  opts = function()
-    local dashboard = require("alpha.themes.dashboard")
-    dashboard.section.header.val = {
-    [[                                                   ]],
-    [[                                              ___  ]],
-    [[                                           ,o88888 ]],
-    [[                                        ,o8888888' ]],
-    [[                  ,:o:o:oooo.        ,8O88Pd8888"  ]],
-    [[              ,.::.::o:ooooOoOo:. ,oO8O8Pd888'"    ]],
-    [[            ,.:.::o:ooOoOoOO8O8OOo.8OOPd8O8O"      ]],
-    [[           , ..:.::o:ooOoOOOO8OOOOo.FdO8O8"        ]],
-    [[          , ..:.::o:ooOoOO8O888O8O,COCOO"          ]],
-    [[         , . ..:.::o:ooOoOOOO8OOOOCOCO"            ]],
-    [[         ,. ..:.::o:ooOoOoOO8O8OCCCC"o             ]],
-    [[         .. .:...:.::o:ooooOoCoCCC"o:o             ]],
-    [[         . ::.:..:.::o:o:,cooooCo"oo:o:            ]],
-    [[          :  :. . ..:.:cocoooo"'o:o:::'            ]],
-    [[          .'   . ..::ccccoc"'o:o:o:::'             ]],
-    [[         :.:.    ,c:cccc"':.:.:.:.:.'              ]],
-    [[       ..:.:"'`::::c:"'..:.:.:.:.:.'               ]],
-    [[     ...:.'.:.::::"'    . . . . .'                 ]],
-    [[    .. . ....:."' `   .  . . ''                    ]],
-    [[  . . . ...."'                                     ]],
-    [[  .. . ."'                                         ]],
-    [[ .                                                 ]],
-    [[                                                   ]],
-}
-dashboard.section.buttons.val = {
-  -- dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-  -- dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
-  -- dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-	-- dashboard.button("d", "✗  Delete session", "<cmd>SessionsManager delete_session<CR>"),
-  dashboard.button("s", "  Sessions", "<cmd>SessionManager load_session<CR>"),
-  dashboard.button("r", "󱎫  Recent", ":Telescope oldfiles <CR>"),
-	dashboard.button("f", "  Find", ":Telescope find_files <CR>"),
-	dashboard.button("i", "  Info", "<cmd>e ~/.config/CheatSheet.md<cr>"),
-	dashboard.button("q", "  Quit", ":qa<CR>"),
-}
-    for _, button in ipairs(dashboard.section.buttons.val) do
-      button.opts.hl = "AlphaButtons"
-      button.opts.hl_shortcut = "AlphaShortcut"
-    end
-    dashboard.section.header.opts.hl = "AlphaHeader"
-    dashboard.section.buttons.opts.hl = "AlphaButtons"
-    dashboard.section.footer.opts.hl = "AlphaFooter"
-    dashboard.opts.layout[1].val = 8
-    return dashboard
-  end,
-  config = function(_, dashboard)
-    -- close Lazy and re-open when the dashboard is ready
-    if vim.o.filetype == "lazy" then
-      vim.cmd.close()
+  {
+    "folke/trouble.nvim",
+    cmd = { "TroubleToggle", "Trouble" },
+    opts = { use_diagnostic_signs = false },
+    keys = {
+      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+      {
+        "[q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").previous({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Previous trouble/quickfix item",
+      },
+      {
+        "]q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").next({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Next trouble/quickfix item",
+      },
+    },
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = true,
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>xs", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>xS", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+    },
+  },
+
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("telescope").load_extension "ui-select"
+    end,
+  },
+
+  {
+    "goolord/alpha-nvim",
+    event = "VimEnter",
+    opts = function()
+      local dashboard = require("alpha.themes.dashboard")
+      dashboard.section.header.val = {
+      [[                                                   ]],
+      [[                                              ___  ]],
+      [[                                           ,o88888 ]],
+      [[                                        ,o8888888' ]],
+      [[                  ,:o:o:oooo.        ,8O88Pd8888"  ]],
+      [[              ,.::.::o:ooooOoOo:. ,oO8O8Pd888'"    ]],
+      [[            ,.:.::o:ooOoOoOO8O8OOo.8OOPd8O8O"      ]],
+      [[           , ..:.::o:ooOoOOOO8OOOOo.FdO8O8"        ]],
+      [[          , ..:.::o:ooOoOO8O888O8O,COCOO"          ]],
+      [[         , . ..:.::o:ooOoOOOO8OOOOCOCO"            ]],
+      [[         ,. ..:.::o:ooOoOoOO8O8OCCCC"o             ]],
+      [[         .. .:...:.::o:ooooOoCoCCC"o:o             ]],
+      [[         . ::.:..:.::o:o:,cooooCo"oo:o:            ]],
+      [[          :  :. . ..:.:cocoooo"'o:o:::'            ]],
+      [[          .'   . ..::ccccoc"'o:o:o:::'             ]],
+      [[         :.:.    ,c:cccc"':.:.:.:.:.'              ]],
+      [[       ..:.:"'`::::c:"'..:.:.:.:.:.'               ]],
+      [[     ...:.'.:.::::"'    . . . . .'                 ]],
+      [[    .. . ....:."' `   .  . . ''                    ]],
+      [[  . . . ...."'                                     ]],
+      [[  .. . ."'                                         ]],
+      [[ .                                                 ]],
+      [[                                                   ]],
+  }
+  dashboard.section.buttons.val = {
+    -- dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+    -- dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
+    -- dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+    -- dashboard.button("d", "✗  Delete session", "<cmd>SessionsManager delete_session<CR>"),
+    dashboard.button("s", "  Sessions", "<cmd>SessionManager load_session<CR>"),
+    dashboard.button("r", "󱎫  Recent", ":Telescope oldfiles <CR>"),
+    dashboard.button("f", "  Find", ":Telescope find_files <CR>"),
+    dashboard.button("i", "  Info", "<cmd>e ~/.config/CheatSheet.md<cr>"),
+    dashboard.button("q", "  Quit", ":qa<CR>"),
+  }
+      for _, button in ipairs(dashboard.section.buttons.val) do
+        button.opts.hl = "AlphaButtons"
+        button.opts.hl_shortcut = "AlphaShortcut"
+      end
+      dashboard.section.header.opts.hl = "AlphaHeader"
+      dashboard.section.buttons.opts.hl = "AlphaButtons"
+      dashboard.section.footer.opts.hl = "AlphaFooter"
+      dashboard.opts.layout[1].val = 8
+      return dashboard
+    end,
+    config = function(_, dashboard)
+      -- close Lazy and re-open when the dashboard is ready
+      if vim.o.filetype == "lazy" then
+        vim.cmd.close()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "AlphaReady",
+          callback = function()
+            require("lazy").show()
+          end,
+        })
+      end
+
+      require("alpha").setup(dashboard.opts)
+
       vim.api.nvim_create_autocmd("User", {
-        pattern = "AlphaReady",
+        pattern = "LazyVimStarted",
         callback = function()
-          require("lazy").show()
+          local stats = require("lazy").stats()
+          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+          -- dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          dashboard.section.footer.val = ""
+          pcall(vim.cmd.AlphaRedraw)
         end,
       })
-    end
-
-    require("alpha").setup(dashboard.opts)
-
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "LazyVimStarted",
-      callback = function()
-        local stats = require("lazy").stats()
-        local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-        -- dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-        dashboard.section.footer.val = ""
-        pcall(vim.cmd.AlphaRedraw)
-      end,
-    })
-  end,
-}
+    end,
+  }
 }
 return plugins

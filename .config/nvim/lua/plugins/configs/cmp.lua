@@ -1,5 +1,7 @@
 local cmp = require "cmp"
 
+vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+
 dofile(vim.g.base46_cache .. "cmp")
 
 local cmp_ui = require("core.utils").load_config().ui.cmp
@@ -66,16 +68,24 @@ local options = {
     end,
   },
 
-  formatting = formatting_style,
-
+  -- formatting = formatting_style,
+  formatting = {
+    format = function(_, item)
+      local icons = require("lazyvim.config").icons.kinds
+      if icons[item.kind] then
+        item.kind = icons[item.kind] .. item.kind
+      end
+      return item
+    end,
+  },
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-o>"] = cmp.mapping.select_next_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm {
+    -- ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-n>"] = cmp.mapping.close(),
+    ["<C-y>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     },
@@ -111,10 +121,23 @@ local options = {
     { name = "nvim_lua" },
     { name = "path" },
   },
+
+  experimental = {
+    ghost_text = {
+      hl_group = "CmpGhostText",
+    },
+  },
+
+  enabled = function()
+    return vim.g.cmptoggle
+  end,
+
 }
 
 if cmp_style ~= "atom" and cmp_style ~= "atom_colored" then
   options.window.completion.border = border "CmpBorder"
 end
+
+vim.g.cmptoggle = false
 
 return options

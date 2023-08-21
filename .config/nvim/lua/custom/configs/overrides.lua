@@ -130,8 +130,10 @@ M.mason = {
     "jsonlint",
     "json-lsp",
 
-    "dockerfile-language-server",
-    "yaml-language-server",
+    -- latex
+    "latexindent",
+    "ltex-ls",
+    "texlab",
 
   },
 
@@ -262,13 +264,14 @@ M.telescope = {
     "undo",
     "vim_bookmarks",
     "harpoon",
-    "noice",
+    -- "noice",
     "ctags_plus",
     "luasnip",
     "dir",
     "media_files",
     "cder",
-    "bibtex"
+    "bibtex",
+    "file_browser",
   },
   extensions = {
     fzf = {
@@ -297,7 +300,7 @@ M.telescope = {
       format = '',
       -- Format to use for citation label.
       -- Try to match the filetype by default, or use 'plain'
-      global_files = {'~/texmf/bibtex/bib/Zotero.bib'},
+      global_files = {'~/work/research/citations/Zotero.bib'},
       -- Path to global bibliographies (placed outside of the project)
       search_keys = { 'author', 'year', 'title' },
       -- Define the search keys to use in the picker
@@ -322,6 +325,9 @@ M.telescope = {
       filetypes = {"png", "webp", "jpg", "jpeg"},
       -- find command (defaults to `fd`)
       find_cmd = "rg"
+    },
+    file_browser = {
+      hidden = { file_browser=true, folder_browser=true},
     },
   },
 }

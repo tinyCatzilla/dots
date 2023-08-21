@@ -1,8 +1,11 @@
 export ZSH="$HOME/.oh-my-zsh"
+export ZDOTDIR="$HOME/.cache"
+export MAIN="$HOME/work"
 
 #Theme
 ZSH_THEME=""
-
+plugins=(tmux)
+ZSH_TMUX_AUTOSTART=true
 #Plugins
 source $ZSH/oh-my-zsh.sh
 
@@ -11,7 +14,8 @@ eval "$(starship init zsh)"
 source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/plugins/z/z.plugin.zsh
-export PATH=$PATH:/Users/kary/.spicetify
+export SPICETIFY_CONFIG_DIR=/Users/kary/.config/spicetify
+export PATH=$PATH:/Users/kary/.config/spicetify/.spicetify
 
 alias ls='exa --icons -F -H --group-directories-first --git -1'
 export EDITOR="nvim"

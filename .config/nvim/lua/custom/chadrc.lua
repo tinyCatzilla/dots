@@ -7,6 +7,9 @@ M.ui = {
   nvdash = core.nvdash,
   hl_override = highlights.override,
   hl_add = highlights.add,
+  statusline = {
+    separator_style = "block",
+  }
 }
 M.plugins = 'custom.plugins'
 M.mappings = require "custom.mappings"

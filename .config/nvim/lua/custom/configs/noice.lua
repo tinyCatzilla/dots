@@ -7,9 +7,9 @@ end
 noice.setup {
   cmdline = {
     enabled = true,
-    view = "cmdline_popup",
+    view = "cmdline",
     format = {
-      cmdline = { pattern = "^:", icon = "󰘳 ", lang = "vim" },
+      cmdline = { pattern = "^:", icon = "󰘳 ", lang = "vim", },
       search_down = { kind = "search", pattern = "^/", icon = "󰩊 ", lang = "regex" },
       search_up = { kind = "search", pattern = "^%?", icon = "󰩊 ", lang = "regex" },
       filter = { pattern = "^:%s*!", icon = "󰻿 ", lang = "bash" },
@@ -118,44 +118,44 @@ noice.setup {
       -- override cmp documentation with Noice (needs the other options to work)
       ["cmp.entry.get_documentation"] = true,
     },
-    hover = {enabled = false},
-    signature = {enabled = false},
+    hover = {enabled = true},
+    -- signature = {enabled = false},
   },
-  ---@type NoiceConfigViews
-  views = {
-    cmdline_popup = {
-      position = {
-        row = 5,
-        col = "50%",
-      },
-      size = {
-        width = 60,
-        height = "auto",
-      },
-    },
-    popupmenu = {
-      relative = "editor",
-      position = {
-        row = 8,
-        col = "50%",
-      },
-      size = {
-        width = 60,
-        height = 10,
-      },
-      border = {
-        style = "rounded",
-        padding = { 0, 1 },
-      },
-      win_options = {
-        winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-      },
-    },
-    mini = {
-      zindex = 100,
-      win_options = { winblend = 0 },
-    },
-  },
+  -- ---@type NoiceConfigViews
+  -- views = {
+  --   cmdline_popup = {
+  --     position = {
+  --       row = 5,
+  --       col = "50%",
+  --     },
+  --     size = {
+  --       width = 60,
+  --       height = "auto",
+  --     },
+  --   },
+  --   popupmenu = {
+  --     relative = "editor",
+  --     position = {
+  --       row = 8,
+  --       col = "50%",
+  --     },
+  --     size = {
+  --       width = 60,
+  --       height = 10,
+  --     },
+  --     border = {
+  --       style = "rounded",
+  --       padding = { 0, 1 },
+  --     },
+  --     win_options = {
+  --       winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+  --     },
+  --   },
+  --   mini = {
+  --     zindex = 100,
+  --     win_options = { winblend = 0 },
+  --   },
+  -- },
   presets = {
     bottom_search = true,
     command_palette = true,
