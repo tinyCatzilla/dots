@@ -28,3 +28,11 @@ LFCD="/Users/kary/.config/lf/lfcd.zsh"
   if [ -f "$LFCD" ]; then
       source "$LFCD"
   fi
+
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=purple
+ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green
+ZSH_HIGHLIGHT_STYLES[precommand]=fg=green
+ZSH_HIGHLIGHT_STYLES[arg0]=fg=green
+(( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none

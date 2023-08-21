@@ -267,7 +267,8 @@ M.telescope = {
     "luasnip",
     "dir",
     "media_files",
-    "cder"
+    "cder",
+    "bibtex"
   },
   extensions = {
     fzf = {
@@ -287,6 +288,33 @@ M.telescope = {
         open_lazy_root_find_files = "<C-r>f",
         open_lazy_root_live_grep = "<C-r>g",
       },
+    },
+    bibtex = {
+      depth = 1,
+      -- Depth for the *.bib file
+      custom_formats = {},
+      -- Custom format for citation label
+      format = '',
+      -- Format to use for citation label.
+      -- Try to match the filetype by default, or use 'plain'
+      global_files = {'~/texmf/bibtex/bib/Zotero.bib'},
+      -- Path to global bibliographies (placed outside of the project)
+      search_keys = { 'author', 'year', 'title' },
+      -- Define the search keys to use in the picker
+      citation_format = '{{author}} ({{year}}), {{title}}.',
+      -- Template for the formatted citation
+      citation_trim_firstname = true,
+      -- Only use initials for the authors first name
+      citation_max_auth = 2,
+      -- Max number of authors to write in the formatted citation
+      -- following authors will be replaced by "et al."
+      context = false,
+      -- Context awareness disabled by default
+      context_fallback = true,
+      -- Fallback to global/directory .bib files if context not found
+      -- This setting has no effect if context = false
+      wrap = false,
+      -- Wrapping in the preview window is disabled by default
     },
      media_files = {
       -- filetypes whitelist

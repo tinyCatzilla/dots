@@ -4,6 +4,9 @@ M.disabled = {
   n = {
     ["<leader>f"] = "",
     ["<leader>b"] = "",
+    ["<leader>wK"] = "",
+    ["<leader>wk"] ="",
+    ["<leader>k"] = "",
   },
 }
 
@@ -18,24 +21,35 @@ M.disabled = {
 
 M.general = {
   n = {
+    ["<leader>cc"] = { "<cmd>VimtexCompile<CR>"            , "build" },
+    ["<leader>cw"] = { "<cmd>VimtexCountWords!<CR>"        , "count" },
+    ["<leader>d"] = { "<cmd>bdelete!<CR>"                 , "delete buffer" },
+    ["<leader>i"] = { "<cmd>VimtexTocOpen<CR>"            , "index" },
+    ["<leader>q"] = { "<cmd>wqa!<CR>"                     , "quit" },
+    ["<leader>v"] = { "<cmd>VimtexView<CR>"               , "view" },
+    ["<leader>w"] = { "<cmd>wa!<CR>"                      , "write" },
     ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
     ["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right" },
     ["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
     ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
-    ["<leader>q"] = { "<cmd>q<CR>", "󰗼 Close" },
     ["<leader>qq"] = { "<cmd>qa!<CR>", "󰗼 Exit" },
     ["J"] = {"mzJ`z"},
     ["<C-d>"] = {"<C-d>zz"},
     ["<C-u>"] = {"<C-u>zz"},
     -- ["<C-f>"] = {"<cmd>silent !tmux neww tmux-sessionizer<CR>", "tmux stuff"},
+    ["<BS>"] = {"<cmd>bnext<CR>"},
+    ["<S-TAB>"] = {"<cmd>bprevious<CR>"},
+    ["<leader>ss"] = { "<cmd>SessionManager save_current_session<CR>", "save" },
+    ["<leader>sd"] = { "<cmd>SessionManager delete_session<CR>", "delete" },
+    ["<leader>sl"] = { "<cmd>SessionManager load_session<CR>", "load" },
   },
   v = {
-    ["J"] = {":m '>+1<CR>gv=gv"},
-    ["K"] = {":m '<-2<CR>gv=gv"},
+    ["J"] = {":m '>+1<CR>gv=gv", "move down through lines"},
+    ["K"] = {":m '<-2<CR>gv=gv", "move up through lines"},
   },
-  x = {
-    ["<leader>p"] = {"\"_dP"}
-  },
+  -- x = {
+  --   ["<leader>p"] = {"\"_dP", "paste+keep buffer(?)"}
+  -- },
 }
 
 M.harpoon = {
@@ -46,7 +60,7 @@ M.harpoon = {
       end,
       "󱡁 Harpoon Add file",
     },
-    ["<leader>ta"] = { "<cmd>Telescope harpoon marks<CR>", "󱡀 Toggle quick menu" },
+    ["<leader>ht"] = { "<cmd>Telescope harpoon marks<CR>", "󱡀 Toggle quick menu" },
     ["<leader>hb"] = {
       function()
         require("harpoon.ui").toggle_quick_menu()
@@ -111,20 +125,23 @@ M.portal = {
 
 M.telescope = {
   n = {
-    ["<leader>li"] = { "<cmd>Telescope highlights<CR>", "Highlights" },
     ["<leader>cd"] = { "<cmd>Telescope cder<CR>", "Change working directory"},
-    ["<leader>ff"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "󰘳 Find files" },
+    ["<leader>ff"] = {
+      function()
+        require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({previewer = false}))
+      end,
+      "Find files",
+    },
     ["<leader>fh"] = {"<cmd> Telescope find_files cwd=$HOME <CR>", "search home"},
     ["<leader>fp"] = {"<cmd> Telescope find_files cwd=$HOME/Desktop/github <CR>", "search projects"},
-    ["<leader>fd"] = {"<cmd>Telescope dir find_files<CR>"},
-    ["<leader>fg"] = { "<cmd>Telescope git_files<CR>", "Find git files" },
-    ["<leader>fk"] = { "<cmd>Telescope keymaps<CR>", " Find keymaps" },
-    ["<leader>fs"] = { "<cmd>Telescope lsp_document_symbols<CR>", " Find document symbols" },
+    ["<leader>fc"] = {"<cmd> Telescope find_files cwd=$HOME/.config <CR>", "search config"},
+    ["<leader>fb"] = {"<cmd>Telescope bibtex<CR>", "search citations"},
+    -- ["<leader>fk"] = { "<cmd>Telescope keymaps<CR>", " Find keymaps" },
     ["<leader>fr"] = { "<cmd>Telescope frecency<CR>", " Recent files" },
     ["<leader>fu"] = { "<cmd>Telescope undo<CR>", " Undo tree" },
     ["<leader>fz"] = {
       "<cmd>Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>",
-      " Find current file",
+      " Find in file",
     },
   },
 }
@@ -142,8 +159,12 @@ M.bookmark = {
 M.searchbox = {
   n = {
     ["<C-F>"] = { "<cmd> SearchBoxMatchAll clear_matches=true<CR>", "󱘟 Search matching all" },
-    ["<A-R>"] = { "<cmd> SearchBoxReplace confirm=menu<CR>", " Replace" },
+    ["<leader>r"] = { "<cmd> SearchBoxReplace confirm=menu<CR>", " Replace" },
   },
+}
+
+M.latex = {
+
 }
 
 return M
