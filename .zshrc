@@ -1,10 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
-export ZDOTDIR="$HOME/.cache"
 export MAIN="$HOME/work"
 
 #Theme
 ZSH_THEME=""
-plugins=(tmux)
+plugins=(fzf, tmux)
 ZSH_TMUX_AUTOSTART=true
 #Plugins
 source $ZSH/oh-my-zsh.sh
@@ -40,3 +39,23 @@ ZSH_HIGHLIGHT_STYLES[arg0]=fg=green
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPS="--extended"
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type d --base-directory $MAIN"
+
+
+fzf_cd_to_neovim() {
+    local dir
+    dir=$(eval "$FZF_DEFAULT_COMMAND --type d --base-directory \"$MAIN\"" | fzf)
+    if [[ -n $dir ]]; then
+        cd "$MAIN/$dir" && nvim .
+    fi
+}
+
+
+zle -N fzf-cd-widget fzf_cd_to_neovim
+bindkey '^F' fzf-cd-widget
+
+
