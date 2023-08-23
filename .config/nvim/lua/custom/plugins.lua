@@ -93,7 +93,10 @@ local plugins = {
   --   'voldikss/vim-floaterm',
   --   lazy=false,
   -- },
-
+  {
+    "MattesGroeger/vim-bookmarks",
+    cmd = { "BookmarkToggle", "BookmarkClear" },
+  },
   {
     "christoomey/vim-tmux-navigator",
     lazy=false,

@@ -3,11 +3,9 @@ export MAIN="$HOME/work"
 
 #Theme
 ZSH_THEME=""
-plugins=(fzf, tmux)
-ZSH_TMUX_AUTOSTART=true
+plugins=(tmux)
 #Plugins
 source $ZSH/oh-my-zsh.sh
-
 #Star Ship
 eval "$(starship init zsh)"
 source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

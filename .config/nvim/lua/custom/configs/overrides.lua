@@ -272,6 +272,8 @@ M.telescope = {
     "cder",
     "bibtex",
     "file_browser",
+    "themes",
+    "terms",
   },
   extensions = {
     fzf = {

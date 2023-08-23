@@ -32,10 +32,8 @@ M.general = {
     ["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
     ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
     ["<leader>qq"] = { "<cmd>qa!<CR>", "󰗼 Exit" },
-    ["J"] = {"mzJ`z"},
-    -- ["<C-f>"] = {"<cmd>silent !tmux neww tmux-sessionizer<CR>", "tmux stuff"},
-    ["<BS>"] = {"<cmd>bnext<CR>"},
-    ["<S-TAB>"] = {"<cmd>bprevious<CR>"},
+    -- ["<BS>"] = {"<cmd>bnext<CR>"},
+    -- ["<S-TAB>"] = {"<cmd>bprevious<CR>"},
     ["<leader>ss"] = { "<cmd>SessionManager save_current_session<CR>", "save" },
     ["<leader>sd"] = { "<cmd>SessionManager delete_session<CR>", "delete" },
     ["<leader>sl"] = { "<cmd>SessionManager load_session<CR>", "load" },
@@ -141,10 +139,7 @@ M.telescope = {
     -- ["<leader>fk"] = { "<cmd>Telescope keymaps<CR>", " Find keymaps" },
     ["<leader>fr"] = { "<cmd>Telescope frecency<CR>", "search recent" },
     ["<leader>fu"] = { "<cmd>Telescope undo<CR>", " Undo tree" },
-    -- ["<leader>fz"] = {
-    --   "<cmd>Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>",
-    --   " Find in file",
-    -- },
+    ["<leader>fy"] = { function() require('telescope.builtin').buffers() end, "search buffers"}
   },
 }
 
