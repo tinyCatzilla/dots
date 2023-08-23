@@ -385,8 +385,8 @@ local plugins = {
     -- dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
     -- dashboard.button("d", "✗  Delete session", "<cmd>SessionsManager delete_session<CR>"),
     dashboard.button("s", "  Sessions", "<cmd>SessionManager load_session<CR>"),
-    dashboard.button("r", "󱎫  Recent", ":Telescope oldfiles <CR>"),
-    dashboard.button("f", "  Find", ":Telescope find_files <CR>"),
+    dashboard.button("r", "󱎫  Recent", ":Telescope frecency <CR>"),
+    dashboard.button("f", "  Find", ":Telescope file_browser <CR>"),
     dashboard.button("i", "  Info", "<cmd>e ~/.config/CheatSheet.md<cr>"),
     dashboard.button("q", "  Quit", ":qa<CR>"),
   }

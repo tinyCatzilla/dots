@@ -47,7 +47,6 @@ M.override = {
   ["@debug"] = { fg = "purple"},
   -- types/vars
   -- ["@attribute"] = { fg = "cyan"},
-  ["@property"] = { fg = "cyan"},
   ["@variable"] = { fg = "cyan" },
   ["Variable"] = { fg = "cyan" },
   ["@variable.builtin"] = { fg = "pink" }, --this.
@@ -55,77 +54,79 @@ M.override = {
   ["@type.builtin"] = { fg = "purple" }, -- type annotations
   ["Type"] = { fg = "green" },
   ["Typedef"] = { fg = "green" },
+  ["@field"] = { fg = "cyan"},
+  ["@property"] = { fg = "cyan"},
   ["@constant"] = { fg = "cyan" },
   ["@constant.builtin"] = { fg = "cyan" },
   ["@constant.macro"] = { fg = "cyan" },
   -- misc
-  ["@operator"] = { fg = "red" },
-
+  ["@operator"] = { fg = "red" }, -- math/logic
+  ["SpecialChar"] = { fg = "red" },
+  ["WarningMsg"] = { fg = "orange"},
+  ["@error"] = { fg = "red"},
+  ["Error"] = { fg = "red"},
+  ["ErrorMsg"] = { fg = "red"},
+  ["Define"] = { fg = "pink" },
+  ["Special"] = { fg = "cyan" },
+  ["Todo"] = { fg = "green" },
 }
 
----@type HLTable
 M.add = {
+  -- -- latex https://github.com/lervag/vimtex/blob/master/doc/vimtex.txt#L4724
+  texCmd = { fg = "sun" },
+  texCmdEnv = { fg = "sun" },
+  texOpt = { fg = "pink" },
+  texFileOpt = { fg = "pink" },
+  texFilesOpt = { fg = "pink" },
+  texArg = { fg = "pink" },
+  texArgNew = { fg = "pink" },
+  texDefArgName = { fg = "pink" },
+  texFileArg = { fg = "pink" },
+  texBoxOptPosVal = { fg = "pink" },
+  texBoxOptIPosVal = { fg = "pink" },
+  texFilesArg = { fg = "pink" },
+  texCmdAccent = { fg = "pink" },
+  texCmdParbox = { fg = "pink" },
+  texCmdItem = { fg = "pink" },
+  texParm = { fg = "pink" },
+  texMathOper = { fg = "red" },
+  texDelim = { fg = "blue" },
+  texMathDelim = { fg = "blue" },
+  texMathDelimMod = { fg = "blue" },
+  texMathDelimZone = { fg = "blue" },
+  texMathDelimZoneLI = { fg = "blue" },
+  texMathDelimZoneLD = { fg = "blue" },
+  texMathDelimZoneTI = { fg = "blue" },
+  texMathDelimZoneTD = { fg = "blue" },
+  texMathZone = { fg = "cyan" },
+  texEnvArgName = { fg = "green" },
+  texMathEnvArgName = { fg = "green" },
+  texError = { fg = "red" },
+  texLigature = { fg = "purple" },
+  texLength = { fg = "white" },
+
+
+  -- idk
   MultiCursor = { bg = "white" },
   MultiCursorMain = { bg = "white" },
-
---[[   DapBreakpoint = { fg = "red" }, ]]
-
-  LightBulbSign = { bg = "black", fg = "yellow" },
-
-  NvimTreeOpenedFolderName = { fg = "purple", bold = true },
-  NvimTreeOpenedFile = { fg = "green", bold = true },
-
-  -- Cmp Highlights
-  CmpItemKindCodeium = { fg = "#51BDAC" },
-  CmpItemKindTabNine = { fg = "#C73BE3" },
-
-  VirtColumn = { fg = "black2" },
-  FoldColumn = { bg = "black", fg = "white" },
-  Folded = { bg = "black", fg = "white" },
-
-  -- -- Tree Sitter Rainbow
-  -- RainbowDelimiterRed = { fg = "red" },
-  -- RainbowDelimiterYellow = { fg = "yellow" },
-  -- RainbowDelimiterBlue = { fg = "blue" },
-  -- RainbowDelimiterOrange = { fg = "orange" },
-  -- RainbowDelimiterGreen = { fg = "green" },
-  -- RainbowDelimiterViolet = { fg = "purple" },
-  -- RainbowDelimiterCyan = { fg = "cyan" },
-  --
-  -- Diff
-  DiffChange = { fg = "yellow" },
-  DiffAdd = { fg = "vibrant_green" },
-  DiffText = { fg = "white", bg = "red", bold = true },
 
   -- Deprecated
   cssDeprecated                = { strikethrough = true },
   javaScriptDeprecated         = { strikethrough = true },
 
-  -- -- Search highlights
-  -- HlSearchNear = { fg = "#2E3440", bg = "yellow" },
-  -- HlSearchLens = { fg = "#2E3440", bg = "blue" },
-  -- HlSearchLensNear = { fg = "#2E3440", bg = "yellow" },
-
-  -- -- LSP Saga
-  -- SagaBorder = { fg = "blue" },
-  -- SagaWinbarFolder = { fg = "blue" },
-  -- HoverNormal = { fg = "white" },
-  -- CodeActionText = { fg = "white" },
-  -- CodeActionNumber = { link = "Number" },
-
-  -- Custom highlights
-  CopilotHl = { fg = "white", bg = "statusline_bg" },
-  HarpoonHl = { fg = "cyan", bg = "statusline_bg" },
-  BatteryHl = { fg = "nord_blue", bg = "statusline_bg" },
-  SessionHl = { fg = "#e535ab", bg = "statusline_bg" },
-  NotificationHl = { fg = "white", bg = "statusline_bg" },
-  TermHl = { fg = "green", bg = "statusline_bg" },
-  SplitHl = { fg = "white", bg = "statusline_bg" },
-  IndentBlanklineContextChar = { fg = "none" },
-  IndentBlanklineContextStart = { bg = "none" },
-
-  DiagnosticUnnecessary        = { link = "", fg = "light_grey" },
-  LspInlayHint                 = { link = "", fg = "light_grey" },
+  -- -- Custom highlights
+  -- CopilotHl = { fg = "white", bg = "statusline_bg" },
+  -- HarpoonHl = { fg = "cyan", bg = "statusline_bg" },
+  -- BatteryHl = { fg = "nord_blue", bg = "statusline_bg" },
+  -- SessionHl = { fg = "#e535ab", bg = "statusline_bg" },
+  -- NotificationHl = { fg = "white", bg = "statusline_bg" },
+  -- TermHl = { fg = "green", bg = "statusline_bg" },
+  -- SplitHl = { fg = "white", bg = "statusline_bg" },
+  -- IndentBlanklineContextChar = { fg = "none" },
+  -- IndentBlanklineContextStart = { bg = "none" },
+  --
+  -- DiagnosticUnnecessary        = { link = "", fg = "light_grey" },
+  -- LspInlayHint                 = { link = "", fg = "light_grey" },
 }
 
 return M

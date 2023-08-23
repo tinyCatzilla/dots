@@ -6,7 +6,7 @@ M.disabled = {
     ["<leader>b"] = "",
     ["<leader>wK"] = "",
     ["<leader>wk"] = "",
-    -- ["<leader>k"] = "",
+    ["<leader>ch"] = "",
     ["<leader>ra"] = "",
   },
 }
@@ -23,15 +23,12 @@ M.disabled = {
 M.general = {
   n = {
     ["<leader>d"] = { "<cmd>bdelete!<CR>"                 , "delete buffer" },
-    ["<leader>i"] = { "<cmd>VimtexTocOpen<CR>"            , "index" },
     ["<leader>q"] = { "<cmd>wqa!<CR>"                     , "quit" },
-    ["<leader>v"] = { "<cmd>VimtexView<CR>"               , "view" },
     ["<leader>w"] = { "<cmd>wa!<CR>"                      , "write" },
     ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
     ["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right" },
     ["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
     ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
-    ["<leader>qq"] = { "<cmd>qa!<CR>", "󰗼 Exit" },
     -- ["<BS>"] = {"<cmd>bnext<CR>"},
     -- ["<S-TAB>"] = {"<cmd>bprevious<CR>"},
     ["<leader>ss"] = { "<cmd>SessionManager save_current_session<CR>", "save" },
@@ -135,7 +132,7 @@ M.telescope = {
     -- ["<leader>ft"] = {"<cmd> Telescope find_files cwd=$HOME/work/talks <CR>", "search talks"},
     -- ["<leader>fv"] = {"<cmd> Telescope find_files cwd=$HOME/work/vimwiki <CR>", "search vimwiki"},
     ["<leader>fc"] = {"<cmd> Telescope find_files cwd=$HOME/.config <CR>", "search config"},
-    ["<leader>fb"] = {"<cmd>Telescope bibtex<CR>", "search citations"},
+    ["<leader>fb"] = {"<cmd>Telescope bibtex<CR>", "search bib-citations"},
     -- ["<leader>fk"] = { "<cmd>Telescope keymaps<CR>", " Find keymaps" },
     ["<leader>fr"] = { "<cmd>Telescope frecency<CR>", "search recent" },
     ["<leader>fu"] = { "<cmd>Telescope undo<CR>", " Undo tree" },
@@ -155,8 +152,12 @@ M.bookmark = {
 
 M.latex = {
   n = {
-    ["<leader>cc"] = { "<cmd>VimtexCompile<CR>"            , "build" },
-    ["<leader>cw"] = { "<cmd>VimtexCountWords!<CR>"        , "count" },
+    ["<leader>lc"] = { "<cmd>wa! | execute 'VimtexCompile' | execute 'VimtexView'<CR>", "save, compile, and view" },
+    ["<leader>lw"] = { "<cmd>VimtexCountWords!<CR>"        , "word count" },
+    ["<leader>li"] = { "<cmd>VimtexTocOpen<CR>"            , "index" },
+    -- ["<leader>lb"] = { "<cmd>terminal bibexport -o %:p:r.bib %:p:r.aux<CR>", "bib export"},
+    ["<leader>le"] = { "<cmd>VimtexErrors<CR>"           , "errors" },
+    ["<leader>lm"] = { "<plug>(vimtex-context-menu)"            , "vimtex menu" },
   },
 }
 

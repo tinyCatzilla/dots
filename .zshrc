@@ -44,7 +44,7 @@ export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type d --base-directory $MAIN"
 
 
-fzf_cd_to_neovim() {
+fzf_nv_main() {
     local dir
     dir=$(eval "$FZF_DEFAULT_COMMAND --type d --base-directory \"$MAIN\"" | fzf)
     if [[ -n $dir ]]; then
@@ -52,8 +52,16 @@ fzf_cd_to_neovim() {
     fi
 }
 
+fzf_nv_config() {
+    local dir
+    dir=$(eval "$FZF_DEFAULT_COMMAND --type d --base-directory \"$HOME/.config\"" | fzf)
+    if [[ -n $dir ]]; then
+        cd "$HOME/.config/$dir" && nvim .
+    fi
+}
 
-zle -N fzf-cd-widget fzf_cd_to_neovim
-bindkey '^F' fzf-cd-widget
+zle -N fzf-cd-main fzf_nv_main
+bindkey '^F' fzf-cd-main
 
-
+zle -N fzf-cd-config fzf_nv_config
+bindkey '^G' fzf-cd-config

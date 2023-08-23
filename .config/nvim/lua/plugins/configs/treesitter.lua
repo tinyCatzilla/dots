@@ -3,6 +3,7 @@ local options = {
 
   highlight = {
     enable = true,
+    disable = { "latex" },
     use_languagetree = true,
   },
 
