@@ -112,7 +112,7 @@ local is_dap_buffer = function(bufnr)
 end
 
 -- inititalize var to false
-vim.g.cmptoggle = false
+vim.g.cmptoggle = true
 
 M.cmp = {
   enabled = function()

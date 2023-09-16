@@ -22,6 +22,7 @@ M.blankline = {
   show_current_context_start = true,
 }
 
+
 M.luasnip = function(opts)
   require("luasnip").config.set_config(opts)
 
@@ -37,6 +38,9 @@ M.luasnip = function(opts)
   require("luasnip.loaders.from_lua").load()
   require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" }
 
+  -- Set the Ctrl+y mapping to expand/jump in luasnip in insert mode
+  vim.api.nvim_set_keymap('i', '<C-y>', '<Cmd>lua require("luasnip").expand_or_jump()<CR>', { noremap = true, silent = true })
+
   vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
       if
@@ -48,6 +52,7 @@ M.luasnip = function(opts)
     end,
   })
 end
+
 
 M.gitsigns = {
   signs = {
