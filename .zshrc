@@ -3,13 +3,17 @@ export MAIN="$HOME/work"
 
 #Theme
 ZSH_THEME=""
-plugins=(tmux)
+plugins=(tmux
+zsh-syntax-highlighting
+zsh-autosuggestions
+)
+
+ZSH_TMUX_AUTOSTART=true
+
 #Plugins
 source $ZSH/oh-my-zsh.sh
 #Star Ship
 eval "$(starship init zsh)"
-source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH/plugins/z/z.plugin.zsh
 export SPICETIFY_CONFIG_DIR=/Users/kary/.config/spicetify
 export PATH=$PATH:/Users/kary/.config/spicetify/.spicetify
