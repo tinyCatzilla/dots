@@ -142,17 +142,19 @@ M.telescope = {
 
 M.bookmark = {
   n = {
-    ["<leader>ba"] = { "<cmd> BookmarkToggle<CR>", "󰃅 Add bookmark" },
+    ["<leader>bt"] = { "<cmd> BookmarkToggle<CR>", "󰃅 Toggle bookmark" },
     ["<leader>bn"] = { "<cmd> BookmarkNext<CR>", "󰮰 Next bookmark" },
     ["<leader>bp"] = { "<cmd> BookmarkPrev<CR>", "󰮲 Prev bookmark" },
-    ["<leader>bc"] = { "<cmd> BookmarkClear<CR>", "󰃢 Clear bookmark" },
+    ["<leader>bc"] = { "<cmd> BookmarkClear<CR>", "󰃢 Clear bookmarks" },
     ["<leader>bm"] = { "<cmd>Telescope vim_bookmarks all<CR>", " Bookmark Menu"    },
   },
 }
 
 M.latex = {
   n = {
-    ["<leader>lc"] = { "<cmd>wa! | execute 'VimtexCompile' | execute 'VimtexView'<CR>", "save, compile, and view" },
+    ["<leader>lc"] = { "<cmd>VimtexCompile<CR>"            , "compile" },
+    ["<leader>lv"] = { "<cmd>VimtexView<CR>"               , "view" },
+    ["<leader>lcv"] = { "<cmd>wa! | execute 'VimtexCompile' | execute 'VimtexView'<CR>", "save, compile, and view" },
     ["<leader>lw"] = { "<cmd>VimtexCountWords!<CR>"        , "word count" },
     ["<leader>li"] = { "<cmd>VimtexTocOpen<CR>"            , "index" },
     -- ["<leader>lb"] = { "<cmd>terminal bibexport -o %:p:r.bib %:p:r.aux<CR>", "bib export"},

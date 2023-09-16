@@ -37,18 +37,6 @@ local plugins = {
     end,
   },
   {
-    "jackMort/ChatGPT.nvim",
-      event = "VeryLazy",
-      config = function()
-        require("chatgpt").setup()
-      end,
-      dependencies = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
-      }
-  },
-  {
     'lervag/vimtex',
     lazy=false,
     config = function()
@@ -93,6 +81,19 @@ local plugins = {
   --   'voldikss/vim-floaterm',
   --   lazy=false,
   -- },
+  {
+    'stevearc/oil.nvim',
+    lazy = false,
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup({
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }),
+      })
+    end,
+
+  },
   {
     "MattesGroeger/vim-bookmarks",
     cmd = { "BookmarkToggle", "BookmarkClear" },
